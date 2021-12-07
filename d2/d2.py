@@ -1,7 +1,7 @@
 instructions = open("C:/Users/simon/Documents/aoc2021/d2/input.txt").readlines()
 
 def get_state(part_2=False):
-    state = {'aim': 0, 'pos':0, 'depth':0}
+    state = {'aim': 0, 'pos': 0, 'depth': 0}
     for instr in instructions:
         dir, val = instr.split(' ')
         val = int(val)
