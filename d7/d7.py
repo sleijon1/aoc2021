@@ -4,7 +4,7 @@ positions = [int(pos) for pos in instructions.split(',')]
 
 def min_fuel(part_1=True):
     fuels = []
-    for start_pos in positions:
+    for start_pos in range(0, max(positions)):
         fuel = 0
         for pos in positions:
             fuel += abs(start_pos-pos) if part_1 \
