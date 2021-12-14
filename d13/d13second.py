@@ -1,4 +1,5 @@
 import os
+from colorama import Cursor, Fore, Back, Style
 
 def fold(dots, dir, coord):
     new_dots = dots.copy()
@@ -12,12 +13,6 @@ def fold(dots, dir, coord):
                 new_dots.add((coord - (dot[0] - coord), dot[1]))
                 new_dots.remove((dot[0], dot[1]))
     return new_dots
-
-def ppaper(*argv):
-    for i, arg in enumerate(argv):
-        print(f"Paper {i+1}")
-        for p in arg:
-            print(''.join(p))
 
 if __name__ == '__main__':
     instructions = open(os.getcwd() + "\input.txt").read().splitlines()
@@ -37,4 +32,10 @@ if __name__ == '__main__':
     paper_x = max([x for x, _ in dots])
     paper_y = max([y for _, y in dots])
     paper = [['#' if (x, y) in dots else '.' for x in range(paper_x+1)] for y in range(paper_y+1)]
-    ppaper(paper)
+    for y in range(paper_y+1):
+        for x in range(paper_x+1):
+            if (x, y) in dots:
+                print(Fore.GREEN + Back.BLACK + chr(1) + f"{Cursor.POS(x + 2, y + 2)}#")
+            else:
+                print(Back.BLACK + f"{Cursor.POS(x + 2, y + 2)} ")
+    print(Style.RESET_ALL)
