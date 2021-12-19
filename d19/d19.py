@@ -1,29 +1,43 @@
+from itertools import permutations
 def shift_positive(beac_dist: list):
-    x, y = beac_dist
-    min_x, min_y = min(x), min(y)
+    x, y, z = beac_dist
+    min_x, min_y, min_z = min(x), min(y), min(z)
     if min_x < 0:
         beac_dist[0] = [val+abs(min_x) for val in x]
     if min_y < 0:
         beac_dist[1] = [val+abs(min_y) for val in y]
-    #if min_z < 0:
-    #    beac_dist[0] = [val+abs(min_z) for val in z]
+    if min_z < 0:
+        beac_dist[0] = [val+abs(min_z) for val in z]
 
 def coord_sys_gen(beac_dist: list):
-    
-    yield None
+    for face_dir in permutations([0, 1, 2]):
+        face_x, face_y, face_z = face_dir
+        print(face_dir)
+        up = [(1, 1, 1), (-1, 1, 1), (1, -1, 1), (1, 1, -1)]
+        for i, j, k in up:
+            print((i,j,k))
+            yield [[i*el for el in beac_dist[face_x]],
+            [j* el for el in beac_dist[face_y]],
+            [k*el for el in beac_dist[face_z]]]
 
 if __name__=='__main__':
     beac_dists = open("input.txt").read().split('\n\n')
     scanners = []
     for beac_dist in beac_dists:
         x_list, y_list, z_list = [], [], []
-        scanners.append([x,y])
+        scanners.append([x_list,y_list, z_list])
         for dist in beac_dist.split('\n')[1:]:
-            x, y = dist.split(',')
+            x, y, z = dist.split(',')
             x_list.append(int(x))
             y_list.append(int(y))
-
-    curr_scanner = shift_positive(scanners[0])
+            z_list.append(int(z))
+    #shift_positive(scanners[0])
+    curr_scanner = scanners[0]
+    print(curr_scanner)
+    gen = coord_sys_gen(curr_scanner)
+    for i, el in enumerate(gen):
+        print(el)
+    exit()
     beacons = set()
     scanners_add = 0
     while True:
