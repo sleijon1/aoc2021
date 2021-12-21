@@ -1,5 +1,3 @@
-from itertools import product
-
 """ Could be optimized a lot but, in boring ways, leaving it clean and slow :) - ok, i optimized. """
 
 def adjacent(image, point):
