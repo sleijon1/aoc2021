@@ -10,7 +10,7 @@ ROOMS2 = {'A':((3,2), (3,3), (3,4), (3,5)), 'B':((5,2), (5,3), (5,4), (5, 5)),
 def cost_function(a, b, cost_ap):
     cost = abs(b[0]-a[0])*cost_ap
     if cost:
-        cost += abs(1-a[1])*cost_ap + abs(1-b[1])*cost_ap
+        cost += (abs(1-a[1]) + abs(1-b[1]))*cost_ap
     else:
         cost = abs(1-a[1])*cost_ap
     return cost
@@ -55,7 +55,8 @@ def next_states(state, part1, rooms):
             new_state.append((slot[0], slot[1], curr_amphipod))
             return [(tuple(new_state), cost)]
         for slot in possible_slots:
-            cost = cost_function((x, y), slot, COST[curr_amphipod]) 
+            cost = cost_function((x, y), slot, COST[curr_amphipod])
+            new_state = [ap for ap in state if (ap[0], ap[1]) != (x, y)]
             new_state.append((slot[0], slot[1], curr_amphipod))
             new_states.append((tuple(new_state), cost))
     return new_states
@@ -107,5 +108,7 @@ def dijkstra(start_state, part1=False):
 
 start_state1 = list(map(list, open("input.txt").read().splitlines()))
 start_state2 = list(map(list, open("input2.txt").read().splitlines()))
-p1, p2 = dijkstra(start_state1, True), dijkstra(start_state2, False)
+p2 = dijkstra(start_state2, False)
+p1 = dijkstra(start_state1, True)
 print(f"Solution part 1: {p1}, part 2: {p2}")
+#print(f"Solution part 1: {p1}, part 2: {1}")
